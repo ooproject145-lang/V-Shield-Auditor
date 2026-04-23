@@ -1,0 +1,227 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>V-SHIELD | VM SECURITY AUDIT</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        :root { 
+            --neon: #00f2ff; 
+            --neon-glow: rgba(0, 242, 255, 0.3);
+            --crimson: #ff003c; 
+            --matrix: #00ff41; 
+            --bg-dark: #01050a; /* Darker background */
+            --panel-bg: rgba(10, 25, 47, 0.6); /* Softer panel color */
+        }
+        
+        body { 
+            /* Softened, deep space gradient */
+            background: radial-gradient(circle at 50% 50%, #051937 0%, #01050a 100%);
+            color: #ffffff; 
+            font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; 
+            min-height: 100vh;
+            margin: 0;
+            padding: 0;
+        }
+
+        .glass-panel { 
+            background: var(--panel-bg); 
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(0, 242, 255, 0.15); 
+            border-radius: 16px; /* Slightly rounder corners */
+            padding: 24px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.6), 0 0 15px rgba(0, 242, 255, 0.05); /* Added glow */
+            height: auto;
+            margin-bottom: 20px;
+            transition: border-color 0.3s ease;
+        }
+        
+        .glass-panel:hover {
+            border-color: rgba(0, 242, 255, 0.3);
+        }
+
+        /* Beautified Title Glow */
+        .project-title {
+            text-shadow: 0 0 10px var(--neon-glow);
+        }
+
+        .security-icon { 
+            width: 90px; 
+            filter: drop-shadow(0 0 15px var(--neon)); 
+            margin-bottom: 20px;
+        }
+
+        .btn-execute {
+            background: linear-gradient(135deg, #00d2ff 0%, #0066ff 100%);
+            border: none; 
+            color: white; 
+            padding: 14px 40px; 
+            font-weight: 800;
+            border-radius: 8px; 
+            text-transform: uppercase; 
+            letter-spacing: 2px;
+            transition: all 0.4s ease; 
+            box-shadow: 0 5px 20px rgba(0, 102, 255, 0.4);
+        }
+
+        .btn-execute:hover { 
+            transform: translateY(-3px) scale(1.02); 
+            box-shadow: 0 8px 25px rgba(0, 102, 255, 0.6), 0 0 15px var(--neon);
+        }
+
+        .risk-display { 
+            font-size: 5rem; /* Slightly larger */
+            color: var(--crimson); 
+            text-shadow: 0 0 25px var(--crimson), 0 0 5px white; 
+            font-weight: 900; 
+            line-height: 1; 
+        }
+
+        .terminal { 
+            background: #000; 
+            color: var(--matrix); 
+            padding: 15px; 
+            border-radius: 8px; 
+            font-family: 'Consolas', 'Courier New', monospace; 
+            font-size: 0.8rem; 
+            height: 120px; 
+            border: 1px solid #1a1a1a; 
+            overflow: hidden; 
+            box-shadow: inset 0 0 10px rgba(0,255,65,0.1);
+        }
+        
+        .abstract-box { 
+            font-size: 0.9rem; 
+            line-height: 1.6; 
+            color: #d0d0d0; /* Slightly brighter text for readability */
+            text-align: justify; 
+        }
+
+        .stat-label { 
+            font-size: 0.75rem; 
+            letter-spacing: 1.5px; 
+            color: var(--neon); 
+            font-weight: bold; 
+            text-transform: uppercase;
+        }
+        
+        /* Updated Result Output Design */
+        .result-card {
+            background: rgba(0,0,0,0.5);
+            border-radius: 8px;
+            padding: 15px;
+            margin-bottom: 12px;
+            transition: transform 0.2s ease;
+        }
+        
+        .result-card:hover {
+            transform: translateX(5px);
+        }
+    </style>
+</head>
+<body>
+
+<div class="container py-4">
+    <div class="d-flex justify-content-between align-items-center mb-4 px-3 border-bottom border-secondary pb-3">
+        <div>
+            <h4 class="m-0 text-info">V-SHIELD AUDITOR <span class="text-white small">PRO v4.5</span></h4>
+            <small class="text-secondary">CYBERSECURITY IN VIRTUAL ENVIRONMENTS: CHALLENGES AND SOLUTIONS</small>
+        </div>
+        <div class="text-end">
+            <h6 class="m-0 text-uppercase">ABDULRAHMAN AHMED MUKHTAR</h6>
+            <small class="text-info">REG NO: MIU/22/CMP/CYB/090</small>
+        </div>
+    </div>
+
+    <div class="row g-3">
+    <div class="col-12 col-lg-4">
+            <div class="glass-panel mb-3">
+                <h6 class="text-info border-bottom pb-2 text-uppercase">Research Focus</h6>
+                <div class="abstract-box">
+                    <p><strong>The Challenge:</strong> Virtualization creates a complex security layer where simple misconfigurations lead to "VM Escape" and data exfiltration. Traditional security tools often fail to audit the Hypervisor layer itself.</p>
+                    <p><strong>The Solution:</strong> This framework implements an automated audit engine that parses <strong>VM Configuration Metadata</strong>. By identifying insecure side-channels (like Shared Clipboards and Remote Displays), we provide a hardened environment for secure operations.</p>
+                </div>
+            </div>
+            
+            <div class="glass-panel">
+                <h6 class="text-uppercase text-secondary stat-label">Threat Severity Metrics</h6>
+                <div class="text-center py-2">
+                    <div id="riskValue" class="risk-display">00</div>
+                    <p class="small text-secondary mt-1">CUMULATIVE RISK MAGNITUDE</p>
+                    <div class="progress bg-dark mb-3" style="height: 6px; border-radius: 10px;">
+                        <div id="riskBar" class="progress-bar bg-danger" style="width: 0%"></div>
+                    </div>
+                </div>
+                <div class="terminal" id="term">> SYSTEM STANDBY...<br>> CORE LOADED...</div>
+            </div>
+        </div>
+
+        <div class="col-12 col-lg-8">
+        <div class="glass-panel text-center">
+                <img src="https://cdn-icons-png.flaticon.com/512/564/564619.png" class="security-icon" alt="Security Shield" style="filter: invert(88%) sepia(43%) saturate(5427%) hue-rotate(151deg) brightness(108%) contrast(106%);">
+                
+                <h3 class="mb-3">VIRTUAL ENVIRONMENT INTEGRITY SCAN</h3>
+                <p class="text-secondary small mb-4 px-lg-5">
+                    Analyzing <strong>Hypervisor Metadata</strong> to identify architectural vulnerabilities 
+                    and resource-sharing leaks in the virtualized infrastructure.
+                </p>
+                
+                <button class="btn btn-execute mb-4" onclick="launchAudit()">Execute Deep Scan</button>
+                
+                <div id="resultOutput" class="text-start">
+                    </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+async function launchAudit() {
+    const term = document.getElementById('term');
+    const risk = document.getElementById('riskValue');
+    const bar = document.getElementById('riskBar');
+    const output = document.getElementById('resultOutput');
+
+    term.innerHTML = "> Accessing VBOX Metadata...<br>> Scanning Resource Channels...<br>> Auditing Display Ports...";
+    output.innerHTML = "<div class='text-center text-info py-3'>Running Automated Audit Engine...</div>";
+    
+    const response = await fetch('/scan');
+    const data = await response.json();
+
+    setTimeout(() => {
+        output.innerHTML = "";
+        let total = 0;
+        data.forEach(item => {
+            if(item.level === 'CRITICAL') total += 40;
+            else if(item.level === 'HIGH') total += 30;
+            else total += 15;
+
+            output.innerHTML += `
+                <div class="p-3 mb-2 rounded" style="background: rgba(0,0,0,0.4); border-left: 5px solid ${item.level === 'CRITICAL' ? '#ff003c' : '#ffaa00'};">
+                    <div class="d-flex justify-content-between">
+                        <strong class="text-info">${item.title}</strong>
+                        <span class="badge bg-dark border border-secondary">${item.level} RISK</span>
+                    </div>
+                    <div class="small text-secondary mt-1">${item.msg}</div>
+                    <div class="small mt-2 p-1 px-2 rounded bg-black text-success font-monospace" style="display:inline-block; font-size: 0.75rem;">
+                        >> HARDENING STEP: ${item.fix}
+                    </div>
+                </div>
+            `;
+        });
+
+        let i = 0;
+        let int = setInterval(() => {
+            if(i >= total) clearInterval(int);
+            risk.innerText = i.toString().padStart(2, '0');
+            bar.style.width = i + "%";
+            i++;
+        }, 25);
+
+        term.innerHTML = "> Analysis Complete.<br>> Vulnerabilities Cataloged.<br>> System Severity Finalized.";
+    }, 1200);
+}
+</script>
+
+</body>
+</html>

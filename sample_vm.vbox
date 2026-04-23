@@ -1,0 +1,10 @@
+<?xml version="1.0"?>
+<VirtualBox xmlns="http://www.virtualbox.org/">
+  <Machine uuid="{1234}" name="Mewar_Test_VM">
+    <Hardware>
+      <Clipboard mode="Bidirectional"/>
+      <DragAndDrop mode="Enabled"/>
+      <RemoteDisplay enabled="true" authType="Null"/>
+    </Hardware>
+  </Machine>
+</VirtualBox>
